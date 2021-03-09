@@ -4,7 +4,7 @@ VERSION = 0.1
 
 
 def pull_posts(sub, listing, limit, timeframe):
-    url = f"https://www.reddit.com/r/{sub}/{listing}.json?limit={limit}&t={timeframe}"
+    url = f"https://www.reddit.com/r/{sub}/{listing}.json?limit={limit}&t={timeframe}&raw_json=1"
     headers = {
         'User-agent': f'GRAPI v{VERSION}'
     }
@@ -18,9 +18,22 @@ def pull_posts(sub, listing, limit, timeframe):
 if __name__ == '__main__':
     subreddit = "games"
     listing = "hot"
-    limit = 3
+    limit = 10
     timeframe = "all"
 
     response = pull_posts(subreddit, listing, limit, timeframe)
-    for post in response["data"]["children"]:
-        print(post["data"]["title"])
+    for data in response["data"]["children"]:
+        post = data["data"]
+        if len(post["title"]) > 100:
+            print(f"{post['title'][:100]}... ({post['score']})")
+        else:
+            print(f"{post['title']} ({post['score']})")
+
+        print(f"Author: {post['author']}")
+
+        print(f"URL: {post['url']}")
+
+        if post["selftext"]:
+            print(f"{post['selftext'][:50]}...")
+
+        print('----------------------')
