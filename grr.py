@@ -17,7 +17,7 @@ def setup_argparse():
                                dest="listing",
                                choices=["hot", "new", "best",
                                         "random", "rising", "top"],
-                               help="The type of listing to use as a filter. Possible arguments: hot, new, best, random, rising, top", default="hot", required=False)
+                               help="The type of listing to sort by. Possible arguments: hot, new, best, random, rising, top", default="hot", required=False)
     reddit_parser.add_argument('-c',
                                metavar="Post count",
                                dest="count",
