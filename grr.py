@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import argparse
 import requests
 import sys
@@ -50,24 +51,32 @@ def pull_posts(sub, listing, count, timeframe):
 
 
 def print_feed(data):
-    """Print given data to stdout"""
+    """Iterate through results and print formatted posts"""
     for item in data["data"]["children"]:
         post = item["data"]
+        ratio = int(post["upvote_ratio"] * 100)
+        created = to_local_time(post["created_utc"])
         if len(post["title"]) > 100:
-            print(f"\033[93m{post['title'][:100]}...\033[0m ({post['score']})")
+            print(
+                f"\033[93m{post['title'][:100]}...\033[0m ({post['score']} - {ratio}%)")
         else:
-            print(f"\033[93m{post['title']}\033[0m ({post['score']})")
-
-        print(f"Author: {post['author']}")
-
-        print(f"Comments: {post['num_comments']}")
-
-        print(f"URL: {post['url']}")
-
+            print(
+                f"\033[93m{post['title']}\033[0m ({post['score']} - {ratio}%)")
+        print(
+            f"\033[93mPosted:\033[0m {created} \033[93mby\033[0m {post['author']}")
+        print(f"\033[93mComments:\033[0m {post['num_comments']}")
+        print(f"\033[93mURL:\033[0m {post['url']}")
         if post["selftext"]:
-            print(f"{post['selftext'][:50]}...")
+            print(f"\033[93mBody:\033[0m {post['selftext'][:200]}...")
 
-        print('----------------------')
+        print('~~~~~~~~~~~~~~~~~~~~~~')
+
+
+def to_local_time(utc_time):
+    """Convert Reddit's stored UTC time to local formatted time"""
+    t = datetime.utcfromtimestamp(utc_time)
+    new_time = t.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    return new_time.strftime("%x - %X")
 
 
 if __name__ == '__main__':
