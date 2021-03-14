@@ -6,11 +6,13 @@ them and prints them to stdout
 from datetime import datetime, timezone
 import sys
 import argparse
-from colorama import Fore, Style
+from colorama import Fore, Style, init
 import requests
 
 VERSION = 0.2
 
+# Initialize colorama (for Windows)
+init()
 
 def setup_argparse():
     """Setup and parse arguments"""

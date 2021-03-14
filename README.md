@@ -1,6 +1,16 @@
 # RedditAPI
 Script that pulls in posts from a given subreddit.
 
+## Requirements
+The following modules are needed:
+  * `requests`
+  * `colorama`
+
+Install with this command:
+```
+pip install requests colorama
+```
+
 ## Usage
 ```
 python grr.py [options] <subreddit>
@@ -16,5 +26,3 @@ Options:
 * Handle calling non-existent subreddits
 * Handle `count` number not including pinned posts
 * Set min/max amount of posts to pull
-* Better format how results are displayed
-* Add cleaner color formatting
