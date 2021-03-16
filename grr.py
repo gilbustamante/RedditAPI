@@ -14,6 +14,7 @@ VERSION = 0.2
 # Initialize colorama (for Windows)
 init()
 
+
 def setup_argparse():
     """Setup and parse arguments"""
     reddit_parser = argparse.ArgumentParser(
@@ -125,4 +126,7 @@ if __name__ == '__main__':
 
     response = pull_posts(args.subreddit, args.listing,
                           args.count, args.timeframe)
-    print_feed(response)
+    try:
+        print_feed(response)
+    except KeyError:
+        print('That subreddit either does not exist or is set to private.')
