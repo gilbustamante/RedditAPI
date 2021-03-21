@@ -23,6 +23,6 @@ Options:
 | `-t <timeframe>` | How far back in time you want to check for posts, e.g. `day`, `week`, etc. | `all`
 
 ## TODO
-* Handle calling non-existent subreddits
+* ~~Handle calling non-existent subreddits~~
 * Handle `count` number not including pinned posts
 * Set min/max amount of posts to pull
